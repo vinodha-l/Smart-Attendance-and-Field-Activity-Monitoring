@@ -243,20 +243,34 @@ class _TricolourBanner extends StatelessWidget {
         height: 176,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(28),
-          gradient: const LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              AppTheme.saffron,
-              Color(0xFFFFC06A),
-              Color(0xFFFFF8EE),
-              Color(0xFFCDECC9),
-              AppTheme.indiaGreen,
-            ],
-            stops: [0, .20, .50, .76, 1],
-          ),
+          color: AppTheme.navy,
         ),
         child: Stack(children: [
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              height: 7,
+              decoration: const BoxDecoration(
+                color: AppTheme.saffron,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              height: 7,
+              decoration: const BoxDecoration(
+                color: AppTheme.indiaGreen,
+                borderRadius:
+                    BorderRadius.vertical(bottom: Radius.circular(28)),
+              ),
+            ),
+          ),
           Positioned(
             right: -18,
             top: -22,
@@ -265,7 +279,7 @@ class _TricolourBanner extends StatelessWidget {
               height: 130,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.white.withValues(alpha: .26),
+                color: Colors.white.withValues(alpha: .12),
               ),
             ),
           ),
@@ -277,7 +291,7 @@ class _TricolourBanner extends StatelessWidget {
                 width: 66,
                 height: 66,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: const Color(0xFFF7F9FF),
                   borderRadius: BorderRadius.circular(22),
                   boxShadow: [
                     BoxShadow(
@@ -299,13 +313,13 @@ class _TricolourBanner extends StatelessWidget {
                         style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w800,
-                            color: AppTheme.navy)),
+                            color: Colors.white)),
                     Text('FIELD WORKER SERVICES',
                         style: TextStyle(
                             fontSize: 10,
                             letterSpacing: 1.1,
                             fontWeight: FontWeight.w700,
-                            color: AppTheme.navy)),
+                            color: Colors.white70)),
                   ]),
             ]),
           ),

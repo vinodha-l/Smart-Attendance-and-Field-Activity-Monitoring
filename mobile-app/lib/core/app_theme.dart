@@ -8,7 +8,7 @@ class AppTheme {
   static const Color saffron = Color(0xFFFF9933);
   static const Color navy = Color(0xFF000080);
   static const Color indiaGreen = Color(0xFF138808);
-  static const Color cream = Color(0xFFFFF8EE);
+  static const Color cream = Color(0xFFF7F9FF);
   static const Color ink = Color(0xFF172033);
   static const Color brand = navy;
   static const Color surface = cream;
