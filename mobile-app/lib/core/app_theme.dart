@@ -10,6 +10,7 @@ class AppTheme {
   static const Color indiaGreen = Color(0xFF138808);
   static const Color cream = Color(0xFFF7F9FF);
   static const Color ink = Color(0xFF172033);
+  static const Color warmDark = Color(0xFF28211D);
   static const Color brand = navy;
   static const Color surface = cream;
   static const Color positive = indiaGreen;
@@ -26,8 +27,13 @@ class AppTheme {
       );
 
   static ThemeData dark() => _base(
-      ColorScheme.fromSeed(seedColor: saffron, brightness: Brightness.dark),
-      null);
+        ColorScheme.fromSeed(
+          seedColor: saffron,
+          brightness: Brightness.dark,
+          surface: warmDark,
+        ),
+        warmDark,
+      );
 
   static ThemeData _base(ColorScheme scheme, Color? background) {
     final ThemeData theme = ThemeData(
@@ -73,10 +79,25 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
+        floatingLabelBehavior: FloatingLabelBehavior.auto,
+        floatingLabelStyle: const TextStyle(
+          color: navy,
+          fontSize: 14,
+          fontWeight: FontWeight.w600,
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          gapPadding: 8,
+        ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
+          gapPadding: 8,
           borderSide: BorderSide(color: navy.withValues(alpha: 0.18)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          gapPadding: 8,
+          borderSide: const BorderSide(color: navy, width: 2),
         ),
         filled: true,
         fillColor: Colors.white,

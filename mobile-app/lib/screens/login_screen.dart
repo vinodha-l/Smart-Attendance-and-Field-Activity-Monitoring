@@ -108,7 +108,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                 .headlineSmall
                                 ?.copyWith(
                                     fontWeight: FontWeight.w800,
-                                    color: AppTheme.navy)),
+                                    color: Theme.of(context).brightness ==
+                                            Brightness.dark
+                                        ? Colors.white
+                                        : AppTheme.navy)),
                         const SizedBox(height: 6),
                         Text(l.appTagline, textAlign: TextAlign.center),
                         const SizedBox(height: 28),
@@ -243,7 +246,18 @@ class _TricolourBanner extends StatelessWidget {
         height: 176,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(28),
-          color: AppTheme.navy,
+          gradient: const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              AppTheme.saffron,
+              Color(0xFFFFC875),
+              Color(0xFFFFF8EE),
+              Color(0xFFCDECC9),
+              Color(0xFF8CCB82),
+            ],
+            stops: [0, .20, .52, .76, 1],
+          ),
         ),
         child: Stack(children: [
           Positioned(
@@ -284,44 +298,51 @@ class _TricolourBanner extends StatelessWidget {
             ),
           ),
           Positioned(
-            left: 24,
-            bottom: 22,
-            child: Row(children: [
-              Container(
-                width: 66,
-                height: 66,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFF7F9FF),
-                  borderRadius: BorderRadius.circular(22),
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppTheme.navy.withValues(alpha: .14),
-                      blurRadius: 18,
-                      offset: const Offset(0, 8),
-                    ),
-                  ],
-                ),
-                child: const Icon(Icons.volunteer_activism_rounded,
-                    color: AppTheme.navy, size: 36),
+            left: 18,
+            bottom: 20,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: .84),
+                borderRadius: BorderRadius.circular(22),
               ),
-              const SizedBox(width: 14),
-              const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text('தமிழ்நாடு',
-                        style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w800,
-                            color: Colors.white)),
-                    Text('FIELD WORKER SERVICES',
-                        style: TextStyle(
-                            fontSize: 10,
-                            letterSpacing: 1.1,
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white70)),
-                  ]),
-            ]),
+              child: Row(children: [
+                Container(
+                  width: 66,
+                  height: 66,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(22),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppTheme.navy.withValues(alpha: .14),
+                        blurRadius: 18,
+                        offset: const Offset(0, 8),
+                      ),
+                    ],
+                  ),
+                  child: const Icon(Icons.volunteer_activism_rounded,
+                      color: AppTheme.navy, size: 36),
+                ),
+                const SizedBox(width: 14),
+                const Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text('தமிழ்நாடு',
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w800,
+                              color: AppTheme.navy)),
+                      Text('FIELD WORKER SERVICES',
+                          style: TextStyle(
+                              fontSize: 10,
+                              letterSpacing: 1.1,
+                              fontWeight: FontWeight.w700,
+                              color: AppTheme.navy)),
+                    ]),
+              ]),
+            ),
           ),
         ]),
       );
