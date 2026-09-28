@@ -103,6 +103,19 @@ class SessionController extends ChangeNotifier {
     }
   }
 
+  Future<void> signInForDemo() async {
+    _busy = true;
+    _failure = null;
+    notifyListeners();
+    try {
+      _worker = await _repository.signInForDemo();
+      _status = AuthStatus.signedIn;
+    } finally {
+      _busy = false;
+      notifyListeners();
+    }
+  }
+
   Future<void> signOut() async {
     await _repository.signOut();
     _worker = null;

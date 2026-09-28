@@ -28,6 +28,8 @@
   "verifyingOtp": "Verifying OTP...",
   "resendOtpAction": "Resend OTP",
   "otpAutofillNote": "Your phone can suggest the OTP automatically when the SMS arrives.",
+  "viewDemoAction": "View demo without OTP",
+  "demoLoginNote": "Demo mode uses local sample data. It does not send an OTP or save to the government server.",
 
   "navToday": "Today",
   "navTasks": "Tasks",

@@ -91,6 +91,28 @@ class AuthRepository {
     return session.worker;
   }
 
+  /// Starts a local, non-production session so the mobile interface can be
+  /// demonstrated before the backend OTP service is connected.
+  Future<Worker> signInForDemo() async {
+    final Worker worker = Worker(
+      employeeId: 'SW-DEMO-01',
+      name: 'Vinodha L',
+      designation: 'Sanitation Field Worker',
+      assignedArea: 'Chennai Ward 12',
+      mobileNumber: '+91 98765 43210',
+      siteCentre: const GeoPoint(latitude: 13.0827, longitude: 80.2707),
+      geofenceRadiusMeters: 250,
+    );
+    final AuthSession session = AuthSession(
+      token: 'local-demo-session',
+      expiresAt: DateTime.now().add(const Duration(hours: 8)),
+      worker: worker,
+    );
+    _session = session;
+    await _settings.setString(SettingsKeys.session, jsonEncode(session.toJson()));
+    return worker;
+  }
+
   Future<void> signOut() async {
     _session = null;
     await _settings.remove(SettingsKeys.session);

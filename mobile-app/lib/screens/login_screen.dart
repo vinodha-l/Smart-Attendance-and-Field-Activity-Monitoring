@@ -188,6 +188,21 @@ class _LoginScreenState extends State<LoginScreen> {
                           Text(l.otpAutofillNote,
                               textAlign: TextAlign.center,
                               style: Theme.of(context).textTheme.bodySmall),
+                          const SizedBox(height: 8),
+                          OutlinedButton.icon(
+                            onPressed: busy
+                                ? null
+                                : () async {
+                                    await d.sessionController.signInForDemo();
+                                    if (!context.mounted) return;
+                                    await d.taskController.load();
+                                  },
+                            icon: const Icon(Icons.play_circle_outline),
+                            label: Text(l.viewDemoAction),
+                          ),
+                          Text(l.demoLoginNote,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.bodySmall),
                         ] else ...[
                           TextField(
                               controller: _employeeId,
