@@ -8,8 +8,10 @@ class AppTheme {
   static const Color saffron = Color(0xFFFF9933);
   static const Color navy = Color(0xFF000080);
   static const Color indiaGreen = Color(0xFF138808);
+  static const Color cream = Color(0xFFFFF8EE);
+  static const Color ink = Color(0xFF172033);
   static const Color brand = navy;
-  static const Color surface = Color(0xFFFFFBF6);
+  static const Color surface = cream;
   static const Color positive = indiaGreen;
   static const Color warning = saffron;
 
@@ -36,9 +38,10 @@ class AppTheme {
     return theme.copyWith(
       appBarTheme: AppBarTheme(
         backgroundColor: scheme.surface,
-        foregroundColor: scheme.onSurface,
+        foregroundColor: ink,
         centerTitle: false,
-        elevation: 0,
+        elevation: 2,
+        shadowColor: navy.withValues(alpha: 0.08),
         scrolledUnderElevation: 2,
       ),
       cardTheme: CardThemeData(
@@ -68,10 +71,11 @@ class AppTheme {
         ),
       ),
       inputDecorationTheme: InputDecorationTheme(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(14)),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(16)),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(14),
-          borderSide: BorderSide(color: navy.withValues(alpha: 0.28)),
+          borderRadius: BorderRadius.circular(16),
+          borderSide: BorderSide(color: navy.withValues(alpha: 0.18)),
         ),
         filled: true,
         fillColor: Colors.white,

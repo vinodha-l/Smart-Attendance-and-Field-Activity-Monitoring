@@ -224,25 +224,78 @@ class _LoginScreenState extends State<LoginScreen> {
 class _TricolourBanner extends StatelessWidget {
   const _TricolourBanner();
   @override
-  Widget build(BuildContext context) => Column(children: [
-        Container(
-            height: 8,
-            decoration: const BoxDecoration(
-                color: AppTheme.saffron,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(12)))),
-        Container(
-            height: 76,
-            color: Colors.white,
-            alignment: Alignment.center,
-            child: const Icon(Icons.location_on_rounded,
-                size: 54, color: AppTheme.navy)),
-        Container(
-            height: 8,
-            decoration: const BoxDecoration(
-                color: AppTheme.indiaGreen,
-                borderRadius:
-                    BorderRadius.vertical(bottom: Radius.circular(12)))),
-      ]);
+  Widget build(BuildContext context) => Container(
+        height: 176,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(28),
+          gradient: const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              AppTheme.saffron,
+              Color(0xFFFFC06A),
+              Color(0xFFFFF8EE),
+              Color(0xFFCDECC9),
+              AppTheme.indiaGreen,
+            ],
+            stops: [0, .20, .50, .76, 1],
+          ),
+        ),
+        child: Stack(children: [
+          Positioned(
+            right: -18,
+            top: -22,
+            child: Container(
+              width: 130,
+              height: 130,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white.withValues(alpha: .26),
+              ),
+            ),
+          ),
+          Positioned(
+            left: 24,
+            bottom: 22,
+            child: Row(children: [
+              Container(
+                width: 66,
+                height: 66,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(22),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppTheme.navy.withValues(alpha: .14),
+                      blurRadius: 18,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
+                ),
+                child: const Icon(Icons.volunteer_activism_rounded,
+                    color: AppTheme.navy, size: 36),
+              ),
+              const SizedBox(width: 14),
+              const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('தமிழ்நாடு',
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w800,
+                            color: AppTheme.navy)),
+                    Text('FIELD WORKER SERVICES',
+                        style: TextStyle(
+                            fontSize: 10,
+                            letterSpacing: 1.1,
+                            fontWeight: FontWeight.w700,
+                            color: AppTheme.navy)),
+                  ]),
+            ]),
+          ),
+        ]),
+      );
 }
 
 String _failureMessage(AppLocalizations l10n, ApiException? failure) =>
