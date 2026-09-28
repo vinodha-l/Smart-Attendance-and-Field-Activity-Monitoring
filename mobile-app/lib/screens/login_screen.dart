@@ -292,31 +292,6 @@ class _TricolourBanner extends StatelessWidget {
         ),
         child: Stack(children: [
           Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              height: 7,
-              decoration: const BoxDecoration(
-                color: AppTheme.saffron,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Container(
-              height: 7,
-              decoration: const BoxDecoration(
-                color: AppTheme.indiaGreen,
-                borderRadius:
-                    BorderRadius.vertical(bottom: Radius.circular(28)),
-              ),
-            ),
-          ),
-          Positioned(
             right: -18,
             top: -22,
             child: Container(
