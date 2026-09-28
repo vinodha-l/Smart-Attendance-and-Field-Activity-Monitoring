@@ -7,8 +7,19 @@ environment:
   sdk: ">=3.3.0 <4.0.0"
 
 dependencies:
+  connectivity_plus: ^7.3.1
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  geolocator: ^14.1.1
+  http: ^1.6.0
+  image_picker: ^1.2.3
+  intl: ^0.20.3
+  path: ^1.9.1
+  path_provider: ^2.1.6
+  shared_preferences: ^2.5.5
+  sqflite: ^2.4.4
 
 dev_dependencies:
   flutter_test:
@@ -16,4 +27,5 @@ dev_dependencies:
   flutter_lints: ^4.0.0
 
 flutter:
+  generate: true
   uses-material-design: true
