@@ -79,7 +79,9 @@ class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 18, vertical: 18),
-        floatingLabelBehavior: FloatingLabelBehavior.auto,
+        // Keeps the label in the outline notch in both focus states. This
+        // avoids it touching the border on compact Android screens.
+        floatingLabelBehavior: FloatingLabelBehavior.always,
         floatingLabelStyle: const TextStyle(
           color: navy,
           fontSize: 14,
@@ -87,16 +89,16 @@ class AppTheme {
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          gapPadding: 8,
+          gapPadding: 12,
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          gapPadding: 8,
+          gapPadding: 12,
           borderSide: BorderSide(color: navy.withValues(alpha: 0.18)),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
-          gapPadding: 8,
+          gapPadding: 12,
           borderSide: const BorderSide(color: navy, width: 2),
         ),
         filled: true,

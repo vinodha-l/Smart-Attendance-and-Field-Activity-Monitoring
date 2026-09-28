@@ -5,6 +5,7 @@ import '../app_scope.dart';
 import '../core/app_theme.dart';
 import '../data/remote/api_exception.dart';
 import '../l10n/app_localizations.dart';
+import '../widgets/field_worker_logo.dart';
 import '../widgets/language_selector.dart';
 
 /// Phone OTP sign-in, with a password fallback for administration accounts.
@@ -113,7 +114,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                         ? Colors.white
                                         : AppTheme.navy)),
                         const SizedBox(height: 6),
-                        Text(l.appTagline, textAlign: TextAlign.center),
+                        Text(l.appTagline,
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge
+                                ?.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onSurface
+                                        .withValues(alpha: .78))),
                         const SizedBox(height: 28),
                         SegmentedButton<bool>(
                             segments: [
@@ -137,7 +147,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (!_passwordMode) ...[
                           Text(l.mobileOtpHint,
                               textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.bodySmall),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall
+                                  ?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurface
+                                          .withValues(alpha: .82))),
                           const SizedBox(height: 16),
                           TextField(
                               controller: _phone,
@@ -190,7 +207,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           const SizedBox(height: 12),
                           Text(l.otpAutofillNote,
                               textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.bodySmall),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall
+                                  ?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurface
+                                          .withValues(alpha: .78))),
                           const SizedBox(height: 8),
                           OutlinedButton.icon(
                             onPressed: busy
@@ -205,7 +229,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           Text(l.demoLoginNote,
                               textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.bodySmall),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodySmall
+                                  ?.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onSurface
+                                          .withValues(alpha: .72))),
                         ] else ...[
                           TextField(
                               controller: _employeeId,
@@ -321,8 +352,7 @@ class _TricolourBanner extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: const Icon(Icons.volunteer_activism_rounded,
-                      color: AppTheme.navy, size: 36),
+                  child: const Center(child: FieldWorkerLogo(size: 52)),
                 ),
                 const SizedBox(width: 14),
                 const Column(
