@@ -96,6 +96,13 @@ class AppLocalizationsTa extends AppLocalizations {
       'SMS வந்தவுடன் உங்கள் தொலைபேசி OTP-யை தானாக பரிந்துரைக்கலாம்.';
 
   @override
+  String get viewDemoAction => 'OTP இல்லாமல் மாதிரியைப் பார்க்கவும்';
+
+  @override
+  String get demoLoginNote =>
+      'மாதிரி முறை உள்ளூர் தரவைப் பயன்படுத்துகிறது. இது OTP அனுப்பாது அல்லது அரசு சேவையகத்தில் சேமிக்காது.';
+
+  @override
   String get navToday => 'இன்று';
 
   @override

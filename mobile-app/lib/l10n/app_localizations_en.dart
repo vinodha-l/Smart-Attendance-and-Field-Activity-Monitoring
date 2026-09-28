@@ -95,6 +95,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Your phone can suggest the OTP automatically when the SMS arrives.';
 
   @override
+  String get viewDemoAction => 'View demo without OTP';
+
+  @override
+  String get demoLoginNote =>
+      'Demo mode uses local sample data. It does not send an OTP or save to the government server.';
+
+  @override
   String get navToday => 'Today';
 
   @override

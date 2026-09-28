@@ -260,6 +260,18 @@ abstract class AppLocalizations {
   /// **'Your phone can suggest the OTP automatically when the SMS arrives.'**
   String get otpAutofillNote;
 
+  /// No description provided for @viewDemoAction.
+  ///
+  /// In en, this message translates to:
+  /// **'View demo without OTP'**
+  String get viewDemoAction;
+
+  /// No description provided for @demoLoginNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Demo mode uses local sample data. It does not send an OTP or save to the government server.'**
+  String get demoLoginNote;
+
   /// No description provided for @navToday.
   ///
   /// In en, this message translates to:

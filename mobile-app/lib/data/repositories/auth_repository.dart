@@ -109,7 +109,8 @@ class AuthRepository {
       worker: worker,
     );
     _session = session;
-    await _settings.setString(SettingsKeys.session, jsonEncode(session.toJson()));
+    await _settings.setString(
+        SettingsKeys.session, jsonEncode(session.toJson()));
     return worker;
   }
 
