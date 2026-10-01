@@ -11,6 +11,7 @@ import 'data/remote/api_client.dart';
 import 'data/repositories/activity_repository.dart';
 import 'data/repositories/attendance_repository.dart';
 import 'data/repositories/auth_repository.dart';
+import 'data/repositories/face_verification_repository.dart';
 import 'data/repositories/sync_repository.dart';
 import 'data/repositories/task_repository.dart';
 import 'services/camera_service.dart';
@@ -51,6 +52,8 @@ class AppDependencies {
   final bool usingSqlite;
 
   late final AuthRepository auth = AuthRepository(api: api, settings: settings);
+  late final FaceVerificationRepository faceVerification =
+      RemoteFaceVerificationRepository(api: api);
   late final AttendanceRepository attendance =
       AttendanceRepository(store: store);
   late final ActivityRepository activities = ActivityRepository(store: store);
@@ -77,6 +80,7 @@ class AppDependencies {
     locationService: locationService,
     cameraService: cameraService,
     workerProvider: () => auth.worker,
+    faceVerificationRepository: faceVerification,
     onRecordQueued: _handleRecordQueued,
   );
 

@@ -44,6 +44,10 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
     }
   }
 
+  Future<void> _verifyFace() async {
+    await AppScope.of(context).attendanceController.verifyFace();
+  }
+
   Future<void> _submit() async {
     final deps = AppScope.of(context);
     final AppLocalizations l10n = AppLocalizations.of(context);
@@ -123,7 +127,10 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
               onCapture: _capturePhoto,
             ),
             const SizedBox(height: 12),
-            _VerificationCard(controller: deps.attendanceController),
+            _VerificationCard(
+              controller: deps.attendanceController,
+              onVerify: _verifyFace,
+            ),
             const SizedBox(height: 20),
             FilledButton(
               onPressed: deps.attendanceController.canSubmit ? _submit : null,
@@ -198,38 +205,141 @@ class _PhotoCard extends StatelessWidget {
   }
 }
 
-/// Checklist of the two verification steps required before submitting.
+/// Shows the actual result of Student 4's face-verification request.
 class _VerificationCard extends StatelessWidget {
-  const _VerificationCard({required this.controller});
+  const _VerificationCard({
+    required this.controller,
+    required this.onVerify,
+  });
 
   final AttendanceController controller;
+  final VoidCallback onVerify;
 
   @override
   Widget build(BuildContext context) {
     final AppLocalizations l10n = AppLocalizations.of(context);
+    final FaceVerificationState state = controller.faceVerificationState;
     final bool hasPhoto = controller.photoPath != null;
-    final bool hasFix = controller.reading != null;
-    final Color pending = Theme.of(context).colorScheme.outline;
+    final _FaceMessage message = _faceMessage(context, state);
+    final bool canVerify = hasPhoto && state != FaceVerificationState.verifying;
 
     return Card(
       child: Column(
         children: <Widget>[
           ListTile(
             leading: Icon(
-              hasPhoto ? Icons.check_circle : Icons.radio_button_unchecked,
-              color: hasPhoto ? Colors.green : pending,
+              message.icon,
+              color: message.color,
             ),
-            title: Text(l10n.selfieQrVerification),
+            title: Text(l10n.faceVerificationTitle),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(hasPhoto
+                    ? message.text
+                    : l10n.faceVerificationCaptureFirst),
+                if (controller.faceVerificationResult != null)
+                  Text(
+                    l10n.faceSimilarity(
+                      controller.faceVerificationResult!.similarity
+                          .toStringAsFixed(2),
+                    ),
+                  ),
+              ],
+            ),
           ),
-          ListTile(
-            leading: Icon(
-              hasFix ? Icons.check_circle : Icons.radio_button_unchecked,
-              color: hasFix ? Colors.green : pending,
+          if (state == FaceVerificationState.verifying)
+            const Padding(
+              padding: EdgeInsets.fromLTRB(16, 0, 16, 12),
+              child: LinearProgressIndicator(),
             ),
-            title: Text(l10n.geofenceVerification),
+          const Divider(height: 1),
+          TextButton.icon(
+            onPressed: canVerify ? onVerify : null,
+            icon: Icon(
+              state == FaceVerificationState.verifying
+                  ? Icons.hourglass_top
+                  : Icons.face_retouching_natural,
+            ),
+            label: Text(
+              state == FaceVerificationState.verifying
+                  ? l10n.faceVerificationLoading
+                  : l10n.verifyFaceAction,
+            ),
           ),
         ],
       ),
     );
   }
+}
+
+class _FaceMessage {
+  const _FaceMessage(this.text, this.icon, this.color);
+
+  final String text;
+  final IconData icon;
+  final Color color;
+}
+
+_FaceMessage _faceMessage(BuildContext context, FaceVerificationState state) {
+  final AppLocalizations l10n = AppLocalizations.of(context);
+  final Color pending = Theme.of(context).colorScheme.outline;
+  final Color error = Theme.of(context).colorScheme.error;
+  return switch (state) {
+    FaceVerificationState.idle => _FaceMessage(
+        l10n.faceVerificationReady,
+        Icons.face_retouching_natural_outlined,
+        pending,
+      ),
+    FaceVerificationState.verifying => _FaceMessage(
+        l10n.faceVerificationLoading,
+        Icons.hourglass_top,
+        pending,
+      ),
+    FaceVerificationState.verified => _FaceMessage(
+        l10n.faceVerifiedSuccess,
+        Icons.verified,
+        Colors.green,
+      ),
+    FaceVerificationState.rejected => _FaceMessage(
+        l10n.faceRejected,
+        Icons.cancel_outlined,
+        error,
+      ),
+    FaceVerificationState.noFace => _FaceMessage(
+        l10n.faceNoFace,
+        Icons.face_retouching_off,
+        error,
+      ),
+    FaceVerificationState.multipleFaces => _FaceMessage(
+        l10n.faceMultipleFaces,
+        Icons.groups_outlined,
+        error,
+      ),
+    FaceVerificationState.workerNotRegistered => _FaceMessage(
+        l10n.faceWorkerNotRegistered,
+        Icons.person_off_outlined,
+        error,
+      ),
+    FaceVerificationState.invalidImage => _FaceMessage(
+        l10n.faceInvalidImage,
+        Icons.broken_image_outlined,
+        error,
+      ),
+    FaceVerificationState.processingError => _FaceMessage(
+        l10n.faceProcessingError,
+        Icons.error_outline,
+        error,
+      ),
+    FaceVerificationState.networkError => _FaceMessage(
+        l10n.faceNetworkError,
+        Icons.cloud_off_outlined,
+        error,
+      ),
+    FaceVerificationState.apiError => _FaceMessage(
+        l10n.faceApiError,
+        Icons.error_outline,
+        error,
+      ),
+  };
 }

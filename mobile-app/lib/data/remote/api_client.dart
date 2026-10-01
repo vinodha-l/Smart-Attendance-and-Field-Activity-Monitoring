@@ -9,6 +9,7 @@ import '../models/attendance_record.dart';
 import '../models/auth_session.dart';
 import '../models/duty_task.dart';
 import '../models/field_activity.dart';
+import '../models/face_verification_result.dart';
 import 'api_exception.dart';
 
 /// Thin HTTP wrapper around the FastAPI backend.
@@ -77,6 +78,26 @@ class ApiClient {
       );
     }
     return session;
+  }
+
+  /// `POST /api/face/verify` - verifies an attendance selfie.
+  ///
+  /// This endpoint's multipart fields are confirmed by Student 4. It does not
+  /// add an authorization header because the final authentication format has
+  /// not been agreed by the backend team.
+  Future<FaceVerificationResult> verifyFace({
+    required String workerId,
+    required String imagePath,
+  }) async {
+    final Map<String, dynamic> json = await _postMultipart(
+      '/face/verify',
+      fields: <String, String>{'worker_id': workerId},
+      files: <http.MultipartFile>[
+        await http.MultipartFile.fromPath('image', imagePath),
+      ],
+      token: '',
+    );
+    return FaceVerificationResult.fromJson(json);
   }
 
   /// `GET /tasks/today` - duty tasks assigned for the current day.

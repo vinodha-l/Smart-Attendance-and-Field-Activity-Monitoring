@@ -536,6 +536,96 @@ abstract class AppLocalizations {
   /// **'Photo evidence is stored on the device. Face verification runs on the server after sync.'**
   String get photoOnlyModeNote;
 
+  /// No description provided for @faceVerificationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Face verification'**
+  String get faceVerificationTitle;
+
+  /// No description provided for @faceVerificationReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a selfie, then verify your face.'**
+  String get faceVerificationReady;
+
+  /// No description provided for @faceVerificationCaptureFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Capture a selfie before face verification.'**
+  String get faceVerificationCaptureFirst;
+
+  /// No description provided for @verifyFaceAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify face'**
+  String get verifyFaceAction;
+
+  /// No description provided for @faceVerificationLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Verifying your selfie...'**
+  String get faceVerificationLoading;
+
+  /// No description provided for @faceVerifiedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Face verified successfully.'**
+  String get faceVerifiedSuccess;
+
+  /// No description provided for @faceRejected.
+  ///
+  /// In en, this message translates to:
+  /// **'Face does not match the registered worker. Please try again.'**
+  String get faceRejected;
+
+  /// No description provided for @faceNoFace.
+  ///
+  /// In en, this message translates to:
+  /// **'No face was found. Capture the selfie again.'**
+  String get faceNoFace;
+
+  /// No description provided for @faceMultipleFaces.
+  ///
+  /// In en, this message translates to:
+  /// **'Only one person should be visible. Capture the selfie again.'**
+  String get faceMultipleFaces;
+
+  /// No description provided for @faceWorkerNotRegistered.
+  ///
+  /// In en, this message translates to:
+  /// **'This worker is not registered for face verification.'**
+  String get faceWorkerNotRegistered;
+
+  /// No description provided for @faceInvalidImage.
+  ///
+  /// In en, this message translates to:
+  /// **'Capture a valid selfie and try again.'**
+  String get faceInvalidImage;
+
+  /// No description provided for @faceProcessingError.
+  ///
+  /// In en, this message translates to:
+  /// **'Face verification is temporarily unavailable. Please retry.'**
+  String get faceProcessingError;
+
+  /// No description provided for @faceNetworkError.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not reach face verification. Check your connection and retry.'**
+  String get faceNetworkError;
+
+  /// No description provided for @faceApiError.
+  ///
+  /// In en, this message translates to:
+  /// **'Face verification could not be completed. Please retry.'**
+  String get faceApiError;
+
+  /// No description provided for @faceSimilarity.
+  ///
+  /// In en, this message translates to:
+  /// **'Similarity: {value}'**
+  String faceSimilarity(String value);
+
   /// No description provided for @doneAction.
   ///
   /// In en, this message translates to:

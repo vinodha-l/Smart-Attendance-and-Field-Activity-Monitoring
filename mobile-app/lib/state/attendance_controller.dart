@@ -3,8 +3,11 @@ import 'package:flutter/foundation.dart';
 import '../core/app_config.dart';
 import '../core/geo.dart';
 import '../data/models/attendance_record.dart';
+import '../data/models/face_verification_result.dart';
 import '../data/models/worker.dart';
 import '../data/repositories/attendance_repository.dart';
+import '../data/repositories/face_verification_repository.dart';
+import '../data/remote/api_exception.dart';
 import '../services/camera_service.dart';
 import '../services/location_service.dart';
 
@@ -15,16 +18,19 @@ class AttendanceController extends ChangeNotifier {
     required LocationService locationService,
     required CameraService cameraService,
     required Worker? Function() workerProvider,
+    required FaceVerificationRepository faceVerificationRepository,
     this.onRecordQueued,
   })  : _repository = repository,
         _locationService = locationService,
         _cameraService = cameraService,
-        _workerProvider = workerProvider;
+        _workerProvider = workerProvider,
+        _faceVerificationRepository = faceVerificationRepository;
 
   final AttendanceRepository _repository;
   final LocationService _locationService;
   final CameraService _cameraService;
   final Worker? Function() _workerProvider;
+  final FaceVerificationRepository _faceVerificationRepository;
 
   /// Called after a punch is stored so the sync queue can be refreshed.
   final VoidCallback? onRecordQueued;
@@ -36,6 +42,10 @@ class AttendanceController extends ChangeNotifier {
   String? _photoPath;
   bool _capturing = false;
   CameraFailure? _cameraFailure;
+
+  FaceVerificationState _faceVerificationState = FaceVerificationState.idle;
+  FaceVerificationResult? _faceVerificationResult;
+  ApiException? _faceVerificationFailure;
 
   bool _submitting = false;
   AttendanceRecord? _todayCheckIn;
@@ -54,6 +64,12 @@ class AttendanceController extends ChangeNotifier {
   bool get capturing => _capturing;
 
   CameraFailure? get cameraFailure => _cameraFailure;
+
+  FaceVerificationState get faceVerificationState => _faceVerificationState;
+
+  FaceVerificationResult? get faceVerificationResult => _faceVerificationResult;
+
+  ApiException? get faceVerificationFailure => _faceVerificationFailure;
 
   bool get submitting => _submitting;
 
@@ -124,13 +140,53 @@ class AttendanceController extends ChangeNotifier {
     try {
       final String? path =
           await _cameraService.capturePhoto(useFrontCamera: true);
-      if (path != null) _photoPath = path;
+      if (path != null) {
+        _photoPath = path;
+        _faceVerificationState = FaceVerificationState.idle;
+        _faceVerificationResult = null;
+        _faceVerificationFailure = null;
+      }
       return path;
     } on CameraException catch (error) {
       _cameraFailure = error.failure;
       return null;
     } finally {
       _capturing = false;
+      notifyListeners();
+    }
+  }
+
+  /// Verifies the already captured attendance selfie with Student 4's API.
+  /// Attendance submission remains independent until its final API contract is
+  /// agreed by the backend team.
+  Future<void> verifyFace() async {
+    final String? photoPath = _photoPath;
+    final Worker? worker = _workerProvider();
+    if (photoPath == null || worker == null || worker.employeeId.isEmpty) {
+      return;
+    }
+
+    _faceVerificationState = FaceVerificationState.verifying;
+    _faceVerificationResult = null;
+    _faceVerificationFailure = null;
+    notifyListeners();
+    try {
+      final FaceVerificationResult result =
+          await _faceVerificationRepository.verify(
+        workerId: worker.employeeId,
+        imagePath: photoPath,
+      );
+      _faceVerificationResult = result;
+      _faceVerificationState = FaceVerificationState.fromStatus(result.status);
+    } on ApiException catch (error) {
+      _faceVerificationFailure = error;
+      _faceVerificationState = switch (error.failure) {
+        ApiFailure.network ||
+        ApiFailure.timeout =>
+          FaceVerificationState.networkError,
+        _ => FaceVerificationState.apiError,
+      };
+    } finally {
       notifyListeners();
     }
   }
@@ -171,8 +227,41 @@ class AttendanceController extends ChangeNotifier {
     _photoPath = null;
     _locationFailure = null;
     _cameraFailure = null;
+    _faceVerificationState = FaceVerificationState.idle;
+    _faceVerificationResult = null;
+    _faceVerificationFailure = null;
     _locating = false;
     _capturing = false;
     notifyListeners();
   }
+}
+
+/// UI state for the confirmed face-verification outcomes.
+enum FaceVerificationState {
+  idle,
+  verifying,
+  verified,
+  rejected,
+  noFace,
+  multipleFaces,
+  workerNotRegistered,
+  invalidImage,
+  processingError,
+  networkError,
+  apiError;
+
+  static FaceVerificationState fromStatus(FaceVerificationStatus status) =>
+      switch (status) {
+        FaceVerificationStatus.verified => FaceVerificationState.verified,
+        FaceVerificationStatus.rejected => FaceVerificationState.rejected,
+        FaceVerificationStatus.noFace => FaceVerificationState.noFace,
+        FaceVerificationStatus.multipleFaces =>
+          FaceVerificationState.multipleFaces,
+        FaceVerificationStatus.workerNotRegistered =>
+          FaceVerificationState.workerNotRegistered,
+        FaceVerificationStatus.invalidImage =>
+          FaceVerificationState.invalidImage,
+        FaceVerificationStatus.processingError =>
+          FaceVerificationState.processingError,
+      };
 }

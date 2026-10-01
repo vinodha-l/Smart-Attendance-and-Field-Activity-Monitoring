@@ -263,6 +263,64 @@ class AppLocalizationsTa extends AppLocalizations {
       'புகைப்பட ஆதாரம் சாதனத்தில் சேமிக்கப்படுகிறது. ஒத்திசைவுக்குப் பின் முக சரிபார்ப்பு சேவையகத்தில் நடைபெறும்.';
 
   @override
+  String get faceVerificationTitle => 'முக சரிபார்ப்பு';
+
+  @override
+  String get faceVerificationReady =>
+      'செல்ஃபி எடுத்த பிறகு முகத்தைச் சரிபார்க்கவும்.';
+
+  @override
+  String get faceVerificationCaptureFirst =>
+      'முகத்தைச் சரிபார்க்கும் முன் செல்ஃபி எடுக்கவும்.';
+
+  @override
+  String get verifyFaceAction => 'முகத்தைச் சரிபார்க்கவும்';
+
+  @override
+  String get faceVerificationLoading =>
+      'உங்கள் செல்ஃபி சரிபார்க்கப்படுகிறது...';
+
+  @override
+  String get faceVerifiedSuccess => 'முகம் வெற்றிகரமாகச் சரிபார்க்கப்பட்டது.';
+
+  @override
+  String get faceRejected =>
+      'முகம் பதிவு செய்த பணியாளருடன் பொருந்தவில்லை. மீண்டும் முயற்சிக்கவும்.';
+
+  @override
+  String get faceNoFace =>
+      'முகம் கண்டறியப்படவில்லை. மீண்டும் செல்ஃபி எடுக்கவும்.';
+
+  @override
+  String get faceMultipleFaces =>
+      'ஒருவர் மட்டுமே தெரிய வேண்டும். மீண்டும் செல்ஃபி எடுக்கவும்.';
+
+  @override
+  String get faceWorkerNotRegistered =>
+      'இந்தப் பணியாளர் முக சரிபார்ப்புக்கு பதிவு செய்யப்படவில்லை.';
+
+  @override
+  String get faceInvalidImage =>
+      'சரியான செல்ஃபி எடுத்து மீண்டும் முயற்சிக்கவும்.';
+
+  @override
+  String get faceProcessingError =>
+      'முக சரிபார்ப்பு தற்காலிகமாக கிடைக்கவில்லை. மீண்டும் முயற்சிக்கவும்.';
+
+  @override
+  String get faceNetworkError =>
+      'முக சரிபார்ப்பை அணுக முடியவில்லை. இணைப்பைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.';
+
+  @override
+  String get faceApiError =>
+      'முக சரிபார்ப்பை முடிக்க முடியவில்லை. மீண்டும் முயற்சிக்கவும்.';
+
+  @override
+  String faceSimilarity(String value) {
+    return 'ஒற்றுமை: $value';
+  }
+
+  @override
   String get doneAction => 'முடிந்தது';
 
   @override

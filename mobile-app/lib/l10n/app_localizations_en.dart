@@ -260,6 +260,60 @@ class AppLocalizationsEn extends AppLocalizations {
       'Photo evidence is stored on the device. Face verification runs on the server after sync.';
 
   @override
+  String get faceVerificationTitle => 'Face verification';
+
+  @override
+  String get faceVerificationReady => 'Take a selfie, then verify your face.';
+
+  @override
+  String get faceVerificationCaptureFirst =>
+      'Capture a selfie before face verification.';
+
+  @override
+  String get verifyFaceAction => 'Verify face';
+
+  @override
+  String get faceVerificationLoading => 'Verifying your selfie...';
+
+  @override
+  String get faceVerifiedSuccess => 'Face verified successfully.';
+
+  @override
+  String get faceRejected =>
+      'Face does not match the registered worker. Please try again.';
+
+  @override
+  String get faceNoFace => 'No face was found. Capture the selfie again.';
+
+  @override
+  String get faceMultipleFaces =>
+      'Only one person should be visible. Capture the selfie again.';
+
+  @override
+  String get faceWorkerNotRegistered =>
+      'This worker is not registered for face verification.';
+
+  @override
+  String get faceInvalidImage => 'Capture a valid selfie and try again.';
+
+  @override
+  String get faceProcessingError =>
+      'Face verification is temporarily unavailable. Please retry.';
+
+  @override
+  String get faceNetworkError =>
+      'Could not reach face verification. Check your connection and retry.';
+
+  @override
+  String get faceApiError =>
+      'Face verification could not be completed. Please retry.';
+
+  @override
+  String faceSimilarity(String value) {
+    return 'Similarity: $value';
+  }
+
+  @override
   String get doneAction => 'Done';
 
   @override
